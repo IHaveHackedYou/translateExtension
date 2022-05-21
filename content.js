@@ -1,9 +1,10 @@
-const url = chrome.runtime.getURL("word_frequency_normalized.txt");
+const url = chrome.runtime.getURL("translated_word_frequency.txt");
 
 raw_text = "";
 words = [];
 counts = [];
-const translate_threshold = 0.05;
+translations = [];
+const translate_threshold = 12000;
 
 fetch(url).then((response) =>
     console.log(
@@ -19,6 +20,7 @@ fetch(url).then((response) =>
                     word_to_add = word_to_add.replace("\r", "")
                     counts.push(count_to_add)
                     words.push(word_to_add.toString());
+                    translations.push(further_splitted_text[3]);
                 }
             }
             console.log(counts)
@@ -41,9 +43,11 @@ fetch(url).then((response) =>
             for (let i = 0; i < text.length; i++) {
                 current_text = text[i].innerHTML;
                 for (let i = 0; i < founded_words.length; i++) {
+                    console.log("translations" + " " + translations[i]);
+                    index = words.indexOf(founded_words[i]);
                     current_text = current_text.replaceAll(
                         " " + founded_words[i] + " ",
-                        " " + founded_words[i] + " " + "(edit) "
+                        " " + founded_words[i] + " ((" + translations[index] + ")) "
                     );
                     // text[i].textContent = text[i].textContent.replaceAll(
                     //     founded_words[i],

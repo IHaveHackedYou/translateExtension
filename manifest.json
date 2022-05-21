@@ -32,7 +32,7 @@
         "run_at": "document_end"
     }],
     "web_accessible_resources": [{
-        "resources": ["word_frequency.txt", "word_frequency_normalized.txt"],
+        "resources": ["word_frequency.txt", "word_frequency_normalized.txt", "translated_word_frequency.txt"],
         "matches": ["<all_urls>"]
     }]
 }
