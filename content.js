@@ -1,12 +1,19 @@
-const url = chrome.runtime.getURL("translated_word_frequency.txt");
-
+const URL = chrome.runtime.getURL("complete.txt");
+const LIKE_BUTTON_HTML_TEXT = `<button style="
+border: 2px solid;
+width: 20px;
+height: 20px;
+font-size: 80%;
+text-align: center;
+">✓</button> `;
+const DISLIKE_BUTTON_HTML_TEXT = '<button>✗</button> ';
 raw_text = "";
 words = [];
 counts = [];
 translations = [];
-const translate_threshold = 12000;
+const translate_threshold = 0.0002;
 
-fetch(url).then((response) =>
+fetch(URL).then((response) =>
     console.log(
         response.text().then((output) => {
             raw_text = output;
@@ -20,7 +27,10 @@ fetch(url).then((response) =>
                     word_to_add = word_to_add.replace("\r", "")
                     counts.push(count_to_add)
                     words.push(word_to_add.toString());
-                    translations.push(further_splitted_text[3]);
+                    translation_to_add = further_splitted_text[3]
+                        // translation_to_add = translation_to_add.replace(" ", "")
+                    translation_to_add = translation_to_add.substring(0, translation_to_add.length - 1);
+                    translations.push(translation_to_add);
                 }
             }
             console.log(counts)
@@ -43,12 +53,31 @@ fetch(url).then((response) =>
             for (let i = 0; i < text.length; i++) {
                 current_text = text[i].innerHTML;
                 for (let i = 0; i < founded_words.length; i++) {
-                    console.log("translations" + " " + translations[i]);
                     index = words.indexOf(founded_words[i]);
-                    current_text = current_text.replaceAll(
-                        " " + founded_words[i] + " ",
-                        " " + founded_words[i] + " ((" + translations[index] + ")) "
-                    );
+
+                    if (!(translations[index] === "") && translations[index] && translations[index].length > 0) {
+                        current_text = current_text.replaceAll(
+                            " " + founded_words[i] + " ",
+                            " " + founded_words[i] + '|<i>' + translations[index] + "</i> " + LIKE_BUTTON_HTML_TEXT + DISLIKE_BUTTON_HTML_TEXT
+                        );
+                        current_text = current_text.replaceAll(
+                            ". " + founded_words[i] + " ",
+                            ". " + founded_words[i] + "⟪" + translations[index] + "⟫" + LIKE_BUTTON_HTML_TEXT + DISLIKE_BUTTON_HTML_TEXT
+                        );
+                        current_text = current_text.replaceAll(
+                            ", " + founded_words[i] + " ",
+                            ", " + founded_words[i] + "⟪" + translations[index] + "⟫" + LIKE_BUTTON_HTML_TEXT + DISLIKE_BUTTON_HTML_TEXT
+                        );
+                        current_text = current_text.replaceAll(
+                            " " + founded_words[i] + ".",
+                            " " + founded_words[i] + '|<i>' + translations[index] + "</i>." + LIKE_BUTTON_HTML_TEXT + DISLIKE_BUTTON_HTML_TEXT
+                        );
+                        current_text = current_text.replaceAll(
+                            " " + founded_words[i] + ",",
+                            " " + founded_words[i] + "⟪" + translations[index] + "⟫," + LIKE_BUTTON_HTML_TEXT + DISLIKE_BUTTON_HTML_TEXT
+                        );
+                    }
+
                     // text[i].textContent = text[i].textContent.replaceAll(
                     //     founded_words[i],
                     //     founded_words[i] + "(edit)"
