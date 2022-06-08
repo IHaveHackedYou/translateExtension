@@ -12,7 +12,6 @@ const updateSlider = (value) => {
 
 range.oninput = (e) => {
     updateSlider(e.target.value)
-    console.log(e.target.value)
 }
 
 updateSlider(50) // Init value

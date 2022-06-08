@@ -22,6 +22,14 @@ let slider = document.querySelector("#englishLevelSlider");
 //     });
 // }
 
+chrome.storage.sync.get(["englishLevel", "feedbackCheckboxChecked", "stealthModeCheckboxChecked"], ({ englishLevel, feedbackCheckboxChecked, stealthModeCheckboxChecked }) => {
+    updateSlider(englishLevel);
+    feedbackCheckBox.checked = feedbackCheckboxChecked;
+    stealthModeCheckBox.checked = stealthModeCheckboxChecked;
+});
+
+chrome.runtime.connect({ name: "popup" });
+
 feedbackCheckBox.addEventListener("input", async() => {
     let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     let feedbackCheckBox = document.querySelector("#feedbackCheckBox");
@@ -92,7 +100,6 @@ function stealthUnchecked() {
 }
 
 function setEnglishLevel(value) {
-    console.log("english level set" + value);
     englishLevel = value;
     chrome.storage.sync.set({ englishLevel }, () => {});
 }
