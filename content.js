@@ -1,5 +1,6 @@
 // local url to complete.txt
-const URL = chrome.runtime.getURL("complete.txt");
+// const URL = chrome.runtime.getURL("complete.txt");
+const URL = "https://raw.githubusercontent.com/IHaveHackedYou/translateExtension/main/complete.txt";
 
 // like button with css code
 const LIKE_BUTTON_HTML_TEXT = `<button style="
@@ -11,24 +12,29 @@ border-radius: 20%;
 vertical-align: middle;
 margin: 0px 0px 3px 2px;
 text-align: center;
-line-height: 10px;
+line-height: 12px;
 padding: 0px 0px;
-" class="like_button_69420">x</button>`;
+font-size: 10px;
+" class="like_button_69420">✔</button>`;
 
 // dislike button with css code
 const DISLIKE_BUTTON_HTML_TEXT = `<button style="
-border: 2px solid rgba(0, 0, 0, 0.1);
-width: 15px;
-height: 15px;
-background-color: rgba(200, 200, 200, 0.1);
-border-radius: 50%;
-margin: 0px 0px;
+border: 0px;
+width: 14px;
+height: 14px;
+background-color: #8AB4F8;
+border-radius: 20%;
+vertical-align: middle;
+margin: 0px 0px 3px 2px;
+text-align: center;
+line-height: 10px;
+font-size: 10px;
 padding: 0px 0px;
-" class="dislike_button_69420"></button> `;
+" class="like_button_69420">✖</button> `;
 
 const STEALTH_MODE_HTML_BEGIN = `|<i>`;
 const STEALTH_MODE_HTML_END = `</i>`;
-const NON_STEALTH_MODE_HTML_BEGIN = `|<b>`;
+const NON_STEALTH_MODE_HTML_BEGIN = ` <b>`;
 const NON_STEALTH_MODE_HTML_END = `</b>`;
 
 raw_text = "";
@@ -67,7 +73,7 @@ fetch(URL).then((response) =>
         chrome.storage.sync.get(["englishLevel", "feedbackCheckboxChecked", "stealthModeCheckboxChecked"], ({ englishLevel, feedbackCheckboxChecked, stealthModeCheckboxChecked }) => {
             console.log(feedbackCheckboxChecked, stealthModeCheckboxChecked);
             translate_threshold = 1 / englishLevel / 100;
-            raw_text = output;
+            raw_text = output.toLowerCase();
 
             if (feedbackCheckboxChecked) {
                 button_html_like = LIKE_BUTTON_HTML_TEXT;
@@ -99,7 +105,7 @@ fetch(URL).then((response) =>
                     counts.push(count_to_add)
                     words.push(word_to_add.toString());
                     translation_to_add = further_splitted_text[3]
-                    translation_to_add = translation_to_add.substring(0, translation_to_add.length - 1);
+                        // translation_to_add = translation_to_add.substring(0, translation_to_add.length - 1);
                     translations.push(translation_to_add);
                 }
             }
@@ -120,6 +126,12 @@ fetch(URL).then((response) =>
                 });
             }
 
+            document.innerHTML = `<span style="
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            ">Loading</span>` + document.innerHTML;
+
             for (let i = 0; i < text.length; i++) {
                 current_text = text[i].innerHTML;
                 for (let i = 0; i < founded_words.length; i++) {
@@ -128,23 +140,23 @@ fetch(URL).then((response) =>
                     if (!(translations[index] === "") && translations[index] && translations[index].length > 0) {
                         current_text = current_text.replaceAll(
                             " " + founded_words[i] + " ",
-                            " " + founded_words[i] + trans_html_begin + translations[index] + trans_html_end + LIKE_BUTTON_HTML_TEXT + DISLIKE_BUTTON_HTML_TEXT
+                            " " + founded_words[i] + trans_html_begin + translations[index] + trans_html_end + button_html_like + button_html_dislike
                         );
                         current_text = current_text.replaceAll(
                             ". " + founded_words[i] + " ",
-                            ". " + founded_words[i] + trans_html_begin + translations[index] + trans_html_end + LIKE_BUTTON_HTML_TEXT + DISLIKE_BUTTON_HTML_TEXT
+                            ". " + founded_words[i] + trans_html_begin + translations[index] + trans_html_end + button_html_like + button_html_dislike
                         );
                         current_text = current_text.replaceAll(
                             ", " + founded_words[i] + " ",
-                            ", " + founded_words[i] + trans_html_begin + translations[index] + trans_html_end + LIKE_BUTTON_HTML_TEXT + DISLIKE_BUTTON_HTML_TEXT
+                            ", " + founded_words[i] + trans_html_begin + translations[index] + trans_html_end + button_html_like + button_html_dislike
                         );
                         current_text = current_text.replaceAll(
                             " " + founded_words[i] + ".",
-                            " " + founded_words[i] + trans_html_begin + translations[index] + trans_html_end + ". " + LIKE_BUTTON_HTML_TEXT + DISLIKE_BUTTON_HTML_TEXT
+                            " " + founded_words[i] + trans_html_begin + translations[index] + trans_html_end + ". " + button_html_like + button_html_dislike
                         );
                         current_text = current_text.replaceAll(
                             " " + founded_words[i] + ",",
-                            " " + founded_words[i] + trans_html_begin + translations[index] + trans_html_end + ", " + LIKE_BUTTON_HTML_TEXT + DISLIKE_BUTTON_HTML_TEXT
+                            " " + founded_words[i] + trans_html_begin + translations[index] + trans_html_end + ", " + button_html_like + button_html_dislike
                         );
                     }
                     // text[i].textContent = text[i].textContent.replaceAll(
