@@ -345,61 +345,82 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="popup.css">
-  <title>Ext</title>
-  <!-- <script src="popup.js"></script> -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="popup.css">
+    <title>Ext</title>
+    <!-- <script src="popup.js"></script> -->
 </head>
+
 <body>
-  <section class="navbar">
-    <div class="container">
-      <h1>69420</h1>
-      <img class="close-icon" src="images/close_icon.svg" alt="Close window">
-    </div>
-    <hr class="divider">
-  </section>
+    <section class="navbar">
+        <div class="container">
+            <h1>69420</h1>
+            <img class="close-icon" src="images/close_icon.svg" alt="Close window">
+        </div>
+        <hr class="divider">
+    </section>
 
-  <section class="hero">
-    <div class="container">
-      <ul>
-        <li>
-          <div class="hero-list-elements">
-            <label class="checkbox" for="stealthModeCheckBox">
-              <input class="checkbox__input" type="checkbox" name="" id="stealthModeCheckBox">
-              <div class="checkbox__box"></div>
-              <p class="checkbox__text">Translation stealth mode</p>
-            </label>
-            <!-- <span class="checkmark"></span> -->
-            <!-- <p class="checkbox-text">Feedback buttons</p> -->
-            <img class="info-icon" src="images/info_icon.svg" alt="Open ino popup">
-          </div>
-        </li>
-        <li>
-          <div class="hero-list-elements">
-            <label class="checkbox" for="feedbackCheckBox">
-              <input class="checkbox__input" type="checkbox" name="" id="feedbackCheckBox">
-              <div class="checkbox__box"></div>
-              <p class="checkbox__text">Feedback buttons</p>
-            </label>
-            <img class="info-icon" src="images/info_icon.svg" alt="Open ino popup">
-          </div>
-        </li>
-      </ul>
-    </div>
-  </section>
+    <section class="hero">
+        <div class="container">
+            <ul>
+                <li>
+                    <div class="hero-list-elements">
+                        <label class="checkbox" for="stealthModeCheckBox">
+                            <input class="checkbox__input" type="checkbox" name="" id="stealthModeCheckBox">
+                            <div class="checkbox__box"></div>
+                            <p class="checkbox__text">Translation stealth mode</p>
+                        </label>
+                        <!-- <span class="checkmark"></span> -->
+                        <!-- <p class="checkbox-text">Feedback buttons</p> -->
+                        <div class="tooltip">
+                            <img class="info-icon" src="images/info_icon.svg" alt="Open ino popup">
+                            <span class="tooltip-text__stealth">Display injected translations in a minimalistic way to avoid distraction while reading. A potential downside is that you may overread a few translations.</span>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="hero-list-elements">
+                        <label class="checkbox" for="feedbackCheckBox">
+                            <input class="checkbox__input" type="checkbox" name="" id="feedbackCheckBox">
+                            <div class="checkbox__box"></div>
+                            <p class="checkbox__text">Feedback buttons</p>
+                        </label>
+                        <div class="tooltip">
+                            <img class="info-icon" src="images/info_icon.svg" alt="Open ino popup">
+                            <span class="tooltip-text__feedback">Show feedback button (<button style="
+                                border: 0px;
+                                width: 1.2em;
+                                height: 1.2em;
+                                background-color: #8AB4F8;
+                                border-radius: 20%;
+                                vertical-align: middle;
+                                margin: 0px 0px 3px 2px;
+                                text-align: center;
+                                color: black;
+                                line-height: 10px;
+                                padding: 0px 0px;
+                                " class="dislike_button_69420">✖</button>) behind translations to allow the user to feedback when he already knows the word that it doesn't get further translated. </span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
 
-  <section class="bottom-buttons">
-    <div class="container">
-      <a href="dislike_list.html" class="bottom-button">Edit dislike list</a>
-      <a href="#" class="bottom-button">Edit website list</a>
-    </div>
-    <div class="container" style="margin-top: 12px;">
-        <a href="#" class="bottom-button">Add words</a>
-    </div>
-  </section>
-  <script src="popup.js"></script>
+    <section class="bottom-buttons">
+        <div class="container">
+            <a href="dislike_list.html" class="bottom-button">Edit dislike list</a>
+            <a href="#" class="bottom-button">Edit website list</a>
+        </div>
+        <div class="container" style="margin-top: 12px;">
+            <a href="#" class="bottom-button">Add words</a>
+        </div>
+    </section>
+    <script src="popup.js"></script>
 </body>
+
 </html>

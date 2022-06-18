@@ -158,8 +158,51 @@ section {
 }
 
 
+.tooltip:hover .tooltip-text__stealth{
+  visibility: visible;
+}
 
+.tooltip:hover .tooltip-text__feedback{
+  visibility: visible;
+}
 
+.tooltip:hover .tooltip-text__dislike-list{
+  visibility: visible;
+}
+
+.tooltip .tooltip-text__stealth{
+  visibility: hidden;
+  position: absolute;
+  width: 200px;
+  /* top: 100%; */
+  /* left: 50%; */
+  /* margin-left: -100px; */
+  top: 60px;
+  left: 40px;
+  background: var(--text-color);
+  color: var(--background-color);
+  font-size: 12px;
+  padding: 5px;
+  text-align: center;
+  border-radius: 6px;
+}
+
+.tooltip .tooltip-text__feedback{
+  visibility: hidden;
+  position: absolute;
+  width: 200px;
+  /* top: 100%; */
+  /* left: 50%; */
+  /* margin-left: -100px; */
+  top: 90px;
+  left: 40px;
+  background: var(--text-color);
+  color: var(--background-color);
+  font-size: 12px;
+  padding: 5px;
+  text-align: center;
+  border-radius: 6px;
+}
 
 /* --------DISLIKE LIST.HTML--------- */
 
@@ -178,4 +221,24 @@ li.dislike-list{
 
 hr.dislike-list{
   margin-top: -5px;
+}
+
+.navbar-header{
+  display: flex;
+  place-content: left;
+  width: 100%;
+}
+
+.tooltip .tooltip-text__dislike-list{
+  visibility: hidden;
+  position: absolute;
+  width: 200px;
+  top: 30px;
+  left: 20px;
+  background: var(--text-color);
+  color: var(--background-color);
+  font-size: 12px;
+  padding: 5px;
+  text-align: center;
+  border-radius: 6px;
 }
