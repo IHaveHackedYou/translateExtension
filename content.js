@@ -209,9 +209,8 @@ chrome.storage.local.get(["words", "translations"], ({ words, translations }) =>
         //     i++;
         //     counter++;
         // }
-
         for (let i = 0; i < text.length; i++) {
-            text[i].innerHTML.split(" ").forEach((word) => {
+            text[i].textContent.split(" ").forEach((word) => {
                 // iterate over every word per paragraph
                 if (!founded_words.includes(word.toString()) &&
                     words.includes(word.toString())
