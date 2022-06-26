@@ -20,8 +20,8 @@ chrome.runtime.onInstalled.addListener(() => {
 //   }
 // });
 
+// handle enable/disable of extension
 chrome.commands.onCommand.addListener((command) => {
-  console.log("command");
   if (command === "enable_disable_translation") {
     chrome.storage.sync.get(
       ["enableExtension", "enableTranslation"],
