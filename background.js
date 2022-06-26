@@ -20,6 +20,48 @@ chrome.runtime.onInstalled.addListener(() => {
 //   }
 // });
 
+chrome.commands.onCommand.addListener((command) => {
+  console.log("command");
+  if (command === "enable_disable_translation") {
+    chrome.storage.sync.get(
+      ["enableExtension", "enableTranslation"],
+      ({ enableExtension, enableTranslation }) => {
+        if (enableTranslation === true) {
+          enableTranslation = false;
+        } else if (enableTranslation === false) {
+          enableTranslation = true;
+          enableExtension = true;
+        } else {
+          enableTranslation = true;
+        }
+        //TODO add popup window
+        chrome.storage.sync.set({ enableTranslation, enableExtension }, () => {
+          chrome.tabs.reload();
+        });
+      }
+    );
+  }
+  if (command === "enable_disable_extension") {
+    chrome.storage.sync.get(
+      ["enableExtension", "enableTranslation"],
+      ({ enableExtension, enableTranslation }) => {
+        if (enableExtension === true) {
+          enableExtension = false;
+          enableTranslation = false;
+        } else if (enableExtension === false) {
+          enableExtension = true;
+        } else {
+          enableExtension = true;
+        }
+        //TODO add popup window
+        chrome.storage.sync.set({ enableExtension, enableTranslation }, () => {
+          chrome.tabs.reload();
+        });
+      }
+    );
+  }
+});
+
 // fires when popup window closes
 chrome.runtime.onConnect.addListener(function (port) {
   if (port.name === "popup") {
@@ -36,6 +78,8 @@ function refreshLists(reload = false) {
   allWords = [];
   // translations in German
   translations = [];
+  // all translations in German
+  allTranslations = [];
   // word frequency number in English language
   counts = [];
 
@@ -70,6 +114,7 @@ function refreshLists(reload = false) {
               counts.push(count);
             }
             allWords.push(word);
+            allTranslations.push(translation);
             i++;
           }
 
@@ -83,7 +128,7 @@ function refreshLists(reload = false) {
               sumDislikedCounts += +counts[index];
             }
           }
-          if (dislikeWordList.length > 0) {
+          if (dislikeWordList.length > 0 && englishLevel !== 0) {
             // new englishLevel is average of counts of disliked words
             englishLevel = sumDislikedCounts / dislikeWordList.length;
           } else {
@@ -91,10 +136,18 @@ function refreshLists(reload = false) {
           }
 
           // new englishLevel gets fist applied when this function runs again, due to performance reasons
-          console.log("englishLevel: " + englishLevel);
-
+          console.log(
+            "englishLevel: " +
+              englishLevel +
+              " sumDislikeCounts: " +
+              sumDislikedCounts +
+              " len: " +
+              dislikeWordList.length
+          );
           // save lists
           chrome.storage.local.set({ words });
+          chrome.storage.local.set({ allWords });
+          chrome.storage.local.set({ allTranslations });
           chrome.storage.sync.set({ englishLevel });
           chrome.storage.local.set({ translations }, () => {
             console.log("refreshed");

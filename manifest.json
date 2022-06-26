@@ -34,5 +34,21 @@
     "web_accessible_resources": [{
         "resources": ["word_frequency.txt", "word_frequency_normalized.txt", "translated_word_frequency.txt", "complete.txt"],
         "matches": ["<all_urls>"]
-    }]
+    }],
+    "commands": {
+        "enable_disable_translation": {
+            "suggested_key": {
+                "default": "Alt+Shift+Q",
+                "mac": "Command+Shift+Q"
+            },
+            "description": "enable disable translations but double click behavior still works"
+        },
+        "enable_disable_extension": {
+            "suggested_key": {
+                "default": "Alt+Shift+W",
+                "mac": "Command+Shift+W"
+            },
+            "description": "enable disable extension completely"
+        }
+    }
 }
