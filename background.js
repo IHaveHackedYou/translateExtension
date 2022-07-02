@@ -1,5 +1,5 @@
 const URL =
-  "https://raw.githubusercontent.com/IHaveHackedYou/translateExtension/main/complete.txt";
+  "https://raw.githubusercontent.com/IHaveHackedYou/NLP/main/complete.txt";
 
 chrome.runtime.onInstalled.addListener(() => {
   refreshLists();
@@ -89,10 +89,13 @@ function refreshLists(reload = false) {
       // load englishLevel: float of english level of user, the smaller the number the more words knows the user
       // load dislikeWordList: words that user marked with X or disliked, user already know the word
       chrome.storage.sync.get(
-        ["englishLevel", "dislikeWordList"],
-        ({ englishLevel, dislikeWordList }) => {
+        ["englishLevel", "dislikeWordList", "likedWordList"],
+        ({ englishLevel, dislikeWordList, likedWordList }) => {
           // split word list into array
           splittedWordList = output.split("\n");
+
+          if (likedWordList === undefined) likedWordList = [];
+          if (dislikeWordList === undefined) dislikeWordList = [];
 
           // iterate over splittedWordList
           var i = 0;
@@ -108,7 +111,7 @@ function refreshLists(reload = false) {
 
             // check if current counts should get translated (smaller as englishLevel)
             // and look for duplicate in dislikeWordList
-            if (count < englishLevel && !dislikeWordList.includes(word)) {
+            if ((count < englishLevel && !dislikeWordList.includes(word)) || likedWordList.includes(word)) {
               words.push(word);
               translations.push(translation);
               counts.push(count);

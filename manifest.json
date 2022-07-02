@@ -29,6 +29,7 @@
         "matches": ["*://*/*"],
         "all_frames": true,
         "js": ["content.js"],
+        "css": ["content.css"],
         "run_at": "document_end"
     }],
     "web_accessible_resources": [{
