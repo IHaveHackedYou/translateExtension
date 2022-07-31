@@ -1,9 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
+
 :root {
   --background-color: #292a2d;
   --text-color: #dadce0;
   --primary-color: #8ab4f8;
   --secondary-color: #9aa0a6;
   --tertiary-color: #3f4042;
+  --icon-color: #7E8288;
+}
+
+.container{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
 }
 
 .selection_bubble {
@@ -12,9 +21,68 @@
   top: 0;
   left: 0;
   padding: 5px;
+  width: 150px;
   background-color: var(--background-color);
-  border: 0.5px solid var(--secondary-color);
+  /* border: 0.5px solid var(--secondary-color); */
   border-radius: 5px;
   color: var(--primary-color);
-  font-size: 1em;
+}
+
+.selection_bubble h2 {
+  padding: 0px;
+  margin: 0px;
+  font-size: 15px;
+  font-family: "Roboto", sans-serif;
+}
+
+.selection_bubble i{
+  color: var(--icon-color);
+  cursor: pointer;
+}
+
+.selection_bubble ul{
+  padding: 0px;
+  margin: 10px;
+  margin-top: -5px;
+  list-style-type: none;
+}
+
+.dislike_button_69420 {
+  border: 0px;
+  width: 1.2em;
+  height: 1.2em;
+  background-color: var(--primary-color);
+  border-radius: 20%;
+  vertical-align: middle;
+  margin: 0px 0px 3px 2px;
+  text-align: center;
+  color: black;
+  line-height: 10px;
+  padding: 0px 0px;
+}
+
+.loader {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #292a2d;
+  border: 0.5px solid #9aa0a6;
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+}
+
+#overlay {
+  position: fixed; /* Sit on top of the page content */
+  display: none; /* Hidden by default */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0); /* Black background with opacity */
+  cursor: pointer; /* Add a pointer on hover */
 }

@@ -8,16 +8,13 @@ chrome.storage.sync.get(["dislikeWordList"], ({ dislikeWordList }) => {
     li.appendChild(document.createElement("p"));
     li.firstChild.innerText = word;
     img = document.createElement("img");
-    img.setAttribute("src", "images/garbage_icon.svg");
+    img.setAttribute("src", "images/svg/delete_FILL1_wght400_GRAD0_opsz48.svg");
+    img.className = "garbage-icon"
     li.appendChild(img);
     ul.appendChild(li);
-    let hr = document.createElement("hr");
-    hr.className = "dislike-list";
-    ul.appendChild(hr);
     img.addEventListener("click", () => {
       dislikeWordList.splice(dislikeWordList.indexOf(word), 1);
       ul.removeChild(li);
-      ul.removeChild(hr);
       chrome.storage.sync.set({ dislikeWordList });
     });
   }

@@ -1,427 +1,123 @@
-<!-- <!DOCTYPE html>
-<html>
-
-<head>
-    <link rel="stylesheet" href="button.css" />
-    <h1>69420</h1>
-</head>
-
-<body>
-    <button id="changeColor"></button>
-    <script src="popup.js"></script>
-</body>
-
-</html> -->
-
-<!-- <!DOCTYPE html>
-<html>
-
-<head>
-    <title>69420</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Sofia" rel="stylesheet">
-    <style>
-        body {
-            width: 257px;
-            height: 183px;
-            margin-left: 0px;
-            margin-right: 0px;
-            margin-bottom: 0px;
-            margin-top: 0px;
-            padding: 0px 0px 0px 0px;
-            background-color: #292A2D;
-        }
-        
-        div {
-            margin: 0px 0px 0px 0px;
-            padding: 0px 0px 0px 0px;
-        }
-        
-        h1 {
-            font-family: 'Roboto', sans-serif;
-            font-style: normal;
-            font-weight: 400;
-            font-size: 14px;
-            line-height: 16px;
-            color: #FFFFFF;
-            position: absolute;
-            width: 84px;
-            height: 14px;
-            left: 20px;
-            top: 13px;
-        }
-        
-        p {
-            padding: 0px;
-            color: #e2eaed;
-            font-family: "Roboto", sans-serif;
-            font-weight: bold;
-            font-size: 15px;
-            margin-left: 0px;
-            margin-top: 0px;
-        }
-        
-        h2 {
-            font-family: 'Roboto', sans-serif;
-            font-style: normal;
-            font-weight: 400;
-            font-size: 11px;
-            line-height: 13px;
-            color: #DADCE0;
-            padding: 0px;
-            margin: 0px 0px 0px 0px;
-        }
-        
-        hr {
-            position: absolute;
-            width: 218px;
-            height: 0px;
-            left: 20px;
-            top: 31px;
-            border: 1px solid #3F4042;
-        }
-        
-        .subheader {
-            position: absolute;
-            width: 101px;
-            height: 16px;
-            left: 20px;
-            top: 37px;
-        }
-        
-        .smallP {
-            position: absolute;
-            height: 9px;
-            left: 20px;
-            top: 70px;
-            font-family: 'Roboto', sans-serif;
-            font-style: normal;
-            font-weight: 400;
-            font-size: 8px;
-            line-height: 16px;
-            /* or 200% */
-            /* display: flex; */
-            /* align-items: center; */
-            color: #DADCE0;
-        }
-        
-        .horizontalAlign {
-            display: flex;
-        }
-        /*--------Slider---------*/
-        
-        .wrap {
-            position: absolute;
-            width: 218px;
-            left: 130px;
-            right: 20px;
-            top: 62px;
-            transform: translate(-50%, -50%);
-        }
-        
-        .range {
-            width: 100%;
-            cursor: pointer;
-            opacity: 0;
-        }
-        
-        .range::-ms-tooltip {
-            display: none;
-        }
-        
-        .track {
-            width: 100%;
-            height: 4px;
-            background: #394457;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
-            border-radius: 5px;
-        }
-        
-        .track-inner {
-            width: 0;
-            height: 100%;
-            background: #8AB4F8;
-            border-radius: 5px;
-        }
-        
-        .thumb {
-            width: 14px;
-            height: 14px;
-            background: #8AB4F8;
-            border-radius: 50%;
-            position: absolute;
-            top: 50%;
-            left: 0;
-            transform: translate(0%, -50%);
-            pointer-events: none;
-        }
-        /*--------Checkbox---------*/
-        
-        .pure-material-checkbox {
-            z-index: 0;
-            position: relative;
-            display: inline-block;
-            color: #e2eaed;
-            font-family: "Roboto", sans-serif;
-            font-size: 16px;
-            font-weight: bold;
-            line-height: 1.7;
-        }
-        /* Input */
-        
-        .pure-material-checkbox>input {
-            appearance: none;
-            -moz-appearance: none;
-            -webkit-appearance: none;
-            z-index: -1;
-            position: absolute;
-            width: 14px;
-            height: 14px;
-            left: 20px;
-            top: 91px;
-            display: block;
-            margin: 0;
-            border-radius: 50%;
-            background-color: #8AB4F8;
-            box-shadow: none;
-            outline: none;
-            opacity: 0;
-            transform: scale(1);
-            pointer-events: none;
-            transition: opacity 0.3s, transform 0.2s;
-        }
-        /* Span */
-        
-        .pure-material-checkbox>span {
-            display: inline-block;
-            width: 100%;
-            cursor: pointer;
-        }
-        /* Box */
-        
-        .pure-material-checkbox>span::before {
-            content: "";
-            display: inline-block;
-            border-radius: 3px;
-            box-sizing: border-box;
-            margin: 3px 11px 3px 1px;
-            border: solid 2px;
-            /* Safari */
-            border-color: #636466;
-            border-radius: 2px;
-            vertical-align: top;
-            position: absolute;
-            width: 14px;
-            height: 14px;
-            left: 20px;
-            top: 91px;
-            transition: border-color 0.2s, background-color 0.2s;
-        }
-        /* Checkmark */
-        
-        .pure-material-checkbox>span::after {
-            content: "";
-            display: block;
-            position: absolute;
-            width: 14px;
-            height: 14px;
-            left: 20px;
-            top: 91px;
-            border: solid 2px transparent;
-            border-right: none;
-            border-top: none;
-            transform: translate(3px, 4px) rotate(-45deg);
-        }
-        /* Checked, Indeterminate */
-        
-        .pure-material-checkbox>input:checked,
-        .pure-material-checkbox>input:indeterminate {
-            background-color: rgb(var(--pure-material-primary-rgb, 33, 150, 243));
-        }
-        
-        .pure-material-checkbox>input:checked+span::before,
-        .pure-material-checkbox>input:indeterminate+span::before {
-            border-color: #8AB4F8;
-            background-color: #8AB4F8;
-        }
-        
-        .pure-material-checkbox>input:checked+span::after,
-        .pure-material-checkbox>input:indeterminate+span::after {
-            border-color: #292A2D;
-        }
-        
-        .pure-material-checkbox>input:indeterminate+span::after {
-            border-left: none;
-            transform: translate(4px, 3px);
-        }
-        /* Hover, Focus */
-        
-        .pure-material-checkbox:hover>input {
-            opacity: 0.04;
-        }
-        
-        .pure-material-checkbox>input:focus {
-            opacity: 0.12;
-        }
-        
-        .pure-material-checkbox:hover>input:focus {
-            opacity: 0.16;
-        }
-        /* Active */
-        
-        .pure-material-checkbox>input:active {
-            opacity: 1;
-            transform: scale(0);
-            transition: transform 0s, opacity 0s;
-        }
-        
-        .pure-material-checkbox>input:active+span::before {
-            border-color: rgb(var(--pure-material-primary-rgb, 33, 150, 243));
-        }
-        
-        .pure-material-checkbox>input:checked:active+span::before {
-            border-color: transparent;
-            background-color: rgba(var(--pure-material-onsurface-rgb, 0, 0, 0), 0.6);
-        }
-        /* Disabled */
-        
-        .pure-material-checkbox>input:disabled {
-            opacity: 0;
-        }
-        
-        .pure-material-checkbox>input:disabled+span {
-            color: rgba(var(--pure-material-onsurface-rgb, 0, 0, 0), 0.38);
-            cursor: initial;
-        }
-        
-        .pure-material-checkbox>input:disabled+span::before {
-            border-color: currentColor;
-        }
-        
-        .pure-material-checkbox>input:checked:disabled+span::before,
-        .pure-material-checkbox>input:indeterminate:disabled+span::before {
-            border-color: transparent;
-            background-color: currentColor;
-        }
-    </style>
-</head>
-
-<body>
-    <h1>69420</h1>
-    <hr>
-    <div>
-        <h2 class="subheader">English level</h2>
-         <p id="englishLevelSliderValue">100%</p> 
-        <div class="wrap">
-            <input type="range" class="range" min="0" max="100" step="1" value="0" id="englishLevelSlider">
-            <div class="track">
-                <div class="track-inner"></div>
-            </div>
-            <div class="thumb"></div>
-            <script src="slider.js"></script>
-        </div>
-        <div class="horizontalAlign">
-            <p class="smallP" style="width:44px;">Beginner</p>
-            <p class="smallP" style="left: 106px; text-align: center; width: 44px;">Medium</p>
-            <p class="smallP" style="left: 203px; text-align: right; width: 34px;">Pro</p>
-        </div>
-        <label class="pure-material-checkbox">
-                <input type="checkbox" id="feedbackCheckBox">
-                <span> Feedback buttons</span>
-        </label>
-        <label class="pure-material-checkbox">
-            <input type="checkbox" id="stealthModeCheckBox">
-            <span> Translations stealth mode</span>
-        </label>
-
-    </div>
-    <script src="popup.js"></script>
-</body>
-
-</html>  -->
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="popup.css">
-    <title>Ext</title>
-    <!-- <script src="popup.js"></script> -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <title>Ext</title>
+  <script src="popup.js"></script>
+  <!-- <script src="popup.js"></script> -->
 </head>
 
 <body>
-    <section class="navbar">
-        <div class="container">
-            <h1>69420</h1>
-            <!-- <img class="close-icon" src="images/close_icon.svg" alt="Close window"> -->
-        </div>
-        <hr class="divider">
-    </section>
+  <section class="navbar">
+    <div class="container">
+      <h1>69420</h1>
+      <img class="account-icon" src="images/svg/account_circle_FILL1_wght400_GRAD0_opsz48.svg" alt="Close window">
+    </div>
+  </section>
 
-    <section class="hero">
-        <div class="container">
-            <ul>
-                <li>
-                    <div class="hero-list-elements">
-                        <label class="checkbox" for="stealthModeCheckBox">
-                            <input class="checkbox__input" type="checkbox" name="" id="stealthModeCheckBox">
-                            <div class="checkbox__box"></div>
-                            <p class="checkbox__text">Translation stealth mode</p>
-                        </label>
-                        <!-- <span class="checkmark"></span> -->
-                        <!-- <p class="checkbox-text">Feedback buttons</p> -->
-                        <div class="tooltip">
-                            <img class="info-icon" src="images/info_icon.svg" alt="Open ino popup">
-                            <span class="tooltip-text__stealth">Display injected translations in a minimalistic way to avoid distraction while reading. A potential downside is that you may overread a few translations.</span>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="hero-list-elements">
-                        <label class="checkbox" for="feedbackCheckBox">
-                            <input class="checkbox__input" type="checkbox" name="" id="feedbackCheckBox">
-                            <div class="checkbox__box"></div>
-                            <p class="checkbox__text">Feedback buttons</p>
-                        </label>
-                        <div class="tooltip">
-                            <img class="info-icon" src="images/info_icon.svg" alt="Open ino popup">
-                            <span class="tooltip-text__feedback">Show feedback button (<button style="
-                                border: 0px;
-                                width: 1.2em;
-                                height: 1.2em;
-                                background-color: #8AB4F8;
-                                border-radius: 20%;
-                                vertical-align: middle;
-                                margin: 0px 0px 3px 2px;
-                                text-align: center;
-                                color: black;
-                                line-height: 10px;
-                                padding: 0px 0px;
-                                " class="dislike_button_69420">✖</button>) behind translations to allow the user to feedback when he already knows the word that it doesn't get further translated. </span>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </section>
+  <section class="hero">
+    <div class="container">
+      <ul>
+        <li>
+          <div class="container">
+            <div class="hero-list-elements">
+              <img class="toggle-icon" src="images/svg/translate_FILL1_wght400_GRAD0_opsz48.svg">
+              <p>Automatic translation</p>
+              <!-- <span class="checkmark"></span> -->
+              <!-- <p class="checkbox-text">Feedback buttons</p> -->
+              <div class="tooltip">
+                <img class="info-icon" src="images/svg/info_icon.svg" alt="Open ino popup">
+                <span class="tooltip-text__automatic-translation">Display injected translations in a minimalistic way
+                  to avoid distraction while reading. A potential downside is that you may overread a
+                  few translations.</span>
+              </div>
+            </div>
+            <label class="checkbox" for="automaticTranslationCb">
+              <input class="checkbox__input" type="checkbox" name="" id="automaticTranslationCb">
+              <div class="checkbox__box"></div>
+            </label>
+          </div>
+        </li>
+        <li>
+          <div class="container">
+            <div class="hero-list-elements">
+              <img class="toggle-icon" src="images/svg/mouse_FILL1_wght400_GRAD0_opsz48.svg">
+              <p>Double click for translation</p>
+              <!-- <span class="checkmark"></span> -->
+              <!-- <p class="checkbox-text">Feedback buttons</p> -->
+              <div class="tooltip">
+                <img class="info-icon" src="images/svg/info_icon.svg" alt="Open ino popup">
+                <span class="tooltip-text__double-click">When double clicked on any word open popup with translations and 
+                  add english word to like list.
+                </span>
+              </div>
+            </div>
+            <label class="checkbox" for="doubleClickCb">
+              <input class="checkbox__input" type="checkbox" name="" id="doubleClickCb">
+              <div class="checkbox__box"></div>
+            </label>
+          </div>
+        </li>
+        <li>
+          <div class="container">
+            <div class="hero-list-elements">
+              <img class="toggle-icon" src="images/svg/visibility_FILL1_wght400_GRAD0_opsz48.svg">
+              <p>Well visible translation</p>
+              <!-- <span class="checkmark"></span> -->
+              <!-- <p class="checkbox-text">Feedback buttons</p> -->
+              <div class="tooltip">
+                <img class="info-icon" src="images/svg/info_icon.svg" alt="Open ino popup">
+                <span class="tooltip-text__visible-translation">Display injected translations in a minimalistic way
+                  to avoid distraction while reading. A potential downside is that you may overread a
+                  few translations.</span>
+              </div>
+            </div>
+            <label class="checkbox" for="visibleTranslationCb">
+              <input class="checkbox__input" type="checkbox" name="" id="visibleTranslationCb">
+              <div class="checkbox__box"></div>
+            </label>
+          </div>
+        </li>
+        <li style="padding-bottom:-3px">
+          <div class="container">
+            <div class="hero-list-elements">
+              <img class="toggle-icon" src="images/svg/forum_FILL1_wght400_GRAD0_opsz48.svg">
+              <p>Feedback buttons</p>
+              <!-- <span class="checkmark"></span> -->
+              <!-- <p class="checkbox-text">Feedback buttons</p> -->
+              <div class="tooltip">
+                <img class="info-icon" src="images/svg/info_icon.svg" alt="Open ino popup">
+                <span class="tooltip-text__feedback-buttons">Show button behind automatic translated words. When this button got clicked
+                  add word to dislike list and never translate that word again.
+                </span>
+              </div>
+            </div>
+            <label class="checkbox" for="feedbackButtonsCb">
+              <input class="checkbox__input" type="checkbox" name="" id="feedbackButtonsCb">
+              <div class="checkbox__box"></div>
+            </label>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
 
-    <section class="bottom-buttons">
-        <div class="container">
-            <a href="dislike_list.html" class="bottom-button">Edit dislike list</a>
-            <a href="like_list.html" class="bottom-button">Edit like list</a>
-        </div>
-        <div class="container" style="margin-top: 12px;">
-            <a href="#" class="bottom-button">Add words</a>
-            <a href="#" class="bottom-button">Edit website list</a>
-        </div>
-    </section>
-    <script src="popup.js"></script>
+  <section class="bottom-buttons">
+    <div class="container">
+      <div class="bottom-button" style="margin-left: 10px"> 
+        <a href="dislike_list.html" class="button-text">Edit dislike list</a>
+      </div>
+      <div class="bottom-button" style="margin-right: 10px">
+        <a href="like_list.html" class="button-text">Edit like list</a>
+      </div>
+    </div>
+  </section>
+  <script src="popup.js"></script>
 </body>
 
 </html>

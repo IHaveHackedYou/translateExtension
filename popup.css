@@ -6,16 +6,17 @@
   --primary-color: #8ab4f8;
   --secondary-color: #9aa0a6;
   --tertiary-color: #3f4042;
+  --icon-color: #7E8288;
 }
 
 body {
   background: #292a2d;
-  margin: 0;
+  margin: 20px;
   padding: 0;
   font-family: "Roboto";
   color: var(--text-color);
-  width: 257px;
-  height: 183px;
+  width: 255px;
+  height: 235px;
 }
 
 div {
@@ -26,7 +27,7 @@ div {
 h1 {
   padding: 0;
   margin: 0;
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 400;
 }
 
@@ -47,6 +48,8 @@ ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+  flex-wrap: wrap;
+  display: flex;
 }
 
 img,
@@ -55,6 +58,13 @@ p,
 input {
   padding: 0;
   margin: 0;
+}
+
+li{
+  flex-grow: 1;
+  float: left;
+  padding-top: 3px;
+  padding-bottom: 3px;
 }
 
 p {
@@ -70,24 +80,37 @@ label {
 }
 
 section {
-  padding-left: 10px;
+  /* padding-left: 10px;
   padding-right: 10px;
-  padding-top: 12px;
+  padding-top: 12px; */
+  padding-bottom: 5px;
 }
 
 .bottom-button {
   background-color: rgba(0, 0, 0, 0);
-  border: 0.5px solid var(--secondary-color);
+  border: 0.3px solid var(--tertiary-color);
   border-radius: 3px;
-  color: var(--primary-color);
   font-family: "Roboto";
-  text-decoration: none;
   text-align: center;
-  width: 92px;
-  padding-top: 2px;
-  padding-bottom: 2px;
+  width: 100px;
+  /* padding-bottom: 2px; */
+  height: 30px;
   font-size: 11px;
   font-weight: 500;
+}
+
+.button-text{
+  line-height: 30px;
+  color: var(--primary-color);
+  text-decoration: none;
+  /* display: block; */
+  /* margin: auto; */
+  vertical-align: auto;
+  font-size: 12px;
+}
+
+.navbar{
+  margin-bottom: 10px;
 }
 
 .bottom-button:active {
@@ -104,6 +127,19 @@ section {
   height: 10px;
 }
 
+.account-icon{
+  width: 24px;
+  height: 24px;
+  color: var(--icon-color);
+}
+
+.toggle-icon{
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  margin-top: -2px;
+}
+
 .hero-list-elements {
   margin-bottom: 12px;
   padding: 0;
@@ -116,14 +152,17 @@ section {
 }
 
 .info-icon {
-  padding-bottom: 5px;
-  padding-left: 5px;
+  /* padding-bottom: 5px;
+  padding-left: 5px; */
+  padding:5px;
+  padding-top: 2.5px;
 }
 
 .checkbox {
   display: inline-flex;
   cursor: pointer;
   justify-content: center;
+  margin-top: -1px;
 }
 
 .checkbox__input {
@@ -138,7 +177,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 10px;
+  margin-right: 4px;
   flex-shrink: 0;
   transition: background 0.15s, border 0.15s;
 }
@@ -158,26 +197,30 @@ section {
 }
 
 
-.tooltip:hover .tooltip-text__stealth{
+.tooltip:hover .tooltip-text__automatic-translation{
   visibility: visible;
 }
 
-.tooltip:hover .tooltip-text__feedback{
+.tooltip:hover .tooltip-text__double-click{
   visibility: visible;
 }
 
-.tooltip:hover .tooltip-text__dislike-list{
+.tooltip:hover .tooltip-text__visible-translation{
   visibility: visible;
 }
 
-.tooltip .tooltip-text__stealth{
+.tooltip:hover .tooltip-text__feedback-buttons{
+  visibility: visible;
+}
+
+.tooltip .tooltip-text__automatic-translation{
   visibility: hidden;
   position: absolute;
   width: 200px;
   /* top: 100%; */
   /* left: 50%; */
   /* margin-left: -100px; */
-  top: 60px;
+  top: 80px;
   left: 40px;
   background: var(--text-color);
   color: var(--background-color);
@@ -187,14 +230,48 @@ section {
   border-radius: 6px;
 }
 
-.tooltip .tooltip-text__feedback{
+.tooltip .tooltip-text__double-click{
   visibility: hidden;
   position: absolute;
   width: 200px;
   /* top: 100%; */
   /* left: 50%; */
   /* margin-left: -100px; */
-  top: 90px;
+  top: 125px;
+  left: 40px;
+  background: var(--text-color);
+  color: var(--background-color);
+  font-size: 12px;
+  padding: 5px;
+  text-align: center;
+  border-radius: 6px;
+}
+
+.tooltip .tooltip-text__visible-translation{
+  visibility: hidden;
+  position: absolute;
+  width: 200px;
+  /* top: 100%; */
+  /* left: 50%; */
+  /* margin-left: -100px; */
+  top: 170px;
+  left: 40px;
+  background: var(--text-color);
+  color: var(--background-color);
+  font-size: 12px;
+  padding: 5px;
+  text-align: center;
+  border-radius: 6px;
+}
+
+.tooltip .tooltip-text__feedback-buttons{
+  visibility: hidden;
+  position: absolute;
+  width: 200px;
+  /* top: 100%; */
+  /* left: 50%; */
+  /* margin-left: -100px; */
+  top: 215px;
   left: 40px;
   background: var(--text-color);
   color: var(--background-color);
@@ -207,17 +284,17 @@ section {
 /* --------DISLIKE LIST.HTML--------- */
 
 ul.dislike-list{
-  /* display: flex;
-  place-content: space-between;*/
-  width: 100%;
-  margin-bottom: 15px;
+  display: flex; 
+  place-content: space-between;
+  margin-bottom: 0px;
+  width: 255px;
 }
 
 li.dislike-list{
   display: flex;
   place-content: space-between;
   width: 100%;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
 }
 
 hr.dislike-list{
@@ -230,16 +307,40 @@ hr.dislike-list{
   width: 100%;
 }
 
+.tooltip:hover .tooltip-text__dislike-list{
+  visibility: visible;
+}
+
 .tooltip .tooltip-text__dislike-list{
   visibility: hidden;
   position: absolute;
   width: 200px;
-  top: 30px;
-  left: 20px;
+  top: 45px;
+  left: 40px;
   background: var(--text-color);
   color: var(--background-color);
   font-size: 12px;
   padding: 5px;
   text-align: center;
   border-radius: 6px;
+}
+
+.info-icon-large{
+  padding:5px;
+  padding-top: 4px;
+  padding-left: 8px;
+  width: 15px;
+  height: 15px;
+}
+
+.back-icon{
+  width: 20px;
+  height: 20px;
+  margin-right: -10px;
+  margin-top: -10px;
+}
+
+.garbage-icon{
+  width: 18px;
+  height: 18px;
 }

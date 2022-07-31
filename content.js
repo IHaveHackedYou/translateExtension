@@ -1,17 +1,5 @@
-// dislike button with css code
-const DISLIKE_BUTTON_HTML_TEXT = `<button style="
-border: 0px;
-width: 1.2em;
-height: 1.2em;
-background-color: #8AB4F8;
-border-radius: 20%;
-vertical-align: middle;
-margin: 0px 0px 3px 2px;
-text-align: center;
-color: black;
-line-height: 10px;
-padding: 0px 0px;
-" class="dislike_button_69420">✖</button> `;
+// dislike button
+const DISLIKE_BUTTON_HTML_TEXT = `<button class="dislike_button_69420">✖</button> `;
 
 const STEALTH_MODE_HTML_BEGIN = `|<i>`;
 const STEALTH_MODE_HTML_END = `</i>`;
@@ -20,69 +8,72 @@ const NON_STEALTH_MODE_HTML_END = `</b>`;
 
 words = [];
 translations = [];
-enableExtension_ = true;
+automaticTranslationCb_ = undefined;
+doubleClickCb_ = undefined;
+
+// init translation popup overlay
+var bubbleDOM = document.createElement("div");
+var englishWordH2 = document.createElement("h2");
+var container = document.createElement("div");
+var link = document.createElement("link");
+var translationIcon = document.createElement("i");
+link.setAttribute(
+  "href",
+  "https://fonts.googleapis.com/icon?family=Material+Icons"
+);
+link.setAttribute("rel", "stylesheet");
+translationIcon.innerText = "g_translate";
+translationIcon.setAttribute("class", "material-icons");
+container.setAttribute("class", "container");
+bubbleDOM.setAttribute("class", "selection_bubble");
+
+bubbleDOM.appendChild(link);
+container.appendChild(englishWordH2);
+container.appendChild(translationIcon);
+bubbleDOM.appendChild(container);
+currentSelectedWord = "";
+document.body.appendChild(bubbleDOM);
 
 initLoadingOverlay();
 replaceWords();
 addWordDoubleClick();
-bubbleDOM();
 
 function initLoadingOverlay() {
-  // overlay over complete page
-  loadingOverlay = document.createElement("div");
-  loadingOverlay.setAttribute("id", "overlay");
-  loadingOverlay.setAttribute(
-    "style",
-    `
-    position: fixed; /* Sit on top of the page content */
-    display: none; /* Hidden by default */
-    width: 100%; /* Full width (cover the whole page) */
-    height: 100%; /* Full height (cover the whole page) */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0); /* Black background with opacity */
-    cursor: pointer; /* Add a pointer on hover */`
-  );
-  // position for loader text and box styling
-  loader = document.createElement("div");
-  loader.setAttribute("class", "loader");
-  loader.setAttribute(
-    "style",
-    `
-    position: absolute;
-    top: 30px;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    background-color: #292a2d;
-    border: 0.5px solid #9aa0a6;
-    width: 100px;
-    height: 30px;
-    border-radius: 5px;
-  `
-  );
+  chrome.storage.sync.get(
+    ["automaticTranslationCb"],
+    (automaticTranslationCb) => {
+      automaticTranslationCb_ = automaticTranslationCb.automaticTranslationCb;
+      if (automaticTranslationCb_ === true) {
+        // overlay over complete page
+        loadingOverlay = document.createElement("div");
+        loadingOverlay.setAttribute("id", "overlay");
 
-  // only loading text
-  loaderText = document.createElement("div");
-  loaderText.setAttribute(
-    "style",
-    `
-  color: #8ab4f8;
-  font-family: "Roboto" sans-serif;
-  font-size: 16px;
-  padding-left: 10px;
-  padding-top: 5px;
-  `
+        // position for loader text and box styling
+        loader = document.createElement("div");
+        loader.setAttribute("class", "loader");
+
+        // only loading text
+        loaderText = document.createElement("div");
+        loaderText.setAttribute(
+          "style",
+          `
+color: #8ab4f8;
+font-family: "Roboto" sans-serif;
+font-size: 16px;
+padding-left: 10px;
+padding-top: 5px; 
+`
+        );
+        loaderText.textContent = "Loading ...";
+        loader.appendChild(loaderText);
+
+        loadingOverlay.appendChild(loader);
+
+        // display overlay, hidden at beginning
+        showLoadingOverlay();
+      }
+    }
   );
-  loaderText.textContent = "Loading ...";
-  loader.appendChild(loaderText);
-
-  loadingOverlay.appendChild(loader);
-
-  // display overlay, hidden at beginning
-  showLoadingOverlay();
 }
 
 function replaceWords() {
@@ -92,33 +83,27 @@ function replaceWords() {
     ({ words, translations }) => {
       chrome.storage.sync.get(
         [
-          "feedbackCheckboxChecked",
-          "stealthModeCheckboxChecked",
-          "enableTranslation",
-          "enableExtension",
+          "automaticTranslationCb",
+          "doubleClickCb",
+          "visibleTranslationCb",
+          "feedbackButtonsCb",
         ],
         ({
-          feedbackCheckboxChecked,
-          stealthModeCheckboxChecked,
-          enableTranslation,
-          enableExtension,
+          automaticTranslationCb,
+          doubleClickCb,
+          visibleTranslationCb,
+          feedbackButtonsCb,
         }) => {
-          enableExtension_ = enableExtension;
-          console.log(
-            "enableExtension: " +
-              enableExtension +
-              " enableTranslation: " +
-              enableTranslation
-          );
-          if (enableTranslation === true) {
-            if (feedbackCheckboxChecked) {
+          doubleClickCb_ = doubleClickCb.doubleClickCb
+          if (automaticTranslationCb === true) {
+            if (feedbackButtonsCb) {
               button_html_dislike = DISLIKE_BUTTON_HTML_TEXT;
             } else {
               button_html_like = " ";
               button_html_dislike = " ";
             }
 
-            if (stealthModeCheckboxChecked) {
+            if (!visibleTranslationCb) {
               trans_html_begin = STEALTH_MODE_HTML_BEGIN;
               trans_html_end = STEALTH_MODE_HTML_END;
             } else {
@@ -127,7 +112,7 @@ function replaceWords() {
             }
             // get all text from website with "p" or "blockquote" tag
             const text = document.querySelectorAll("p, blockquote, li, span");
-
+            // const text = document.body
             foundedWords = [];
             i = 0;
             while (i < text.length) {
@@ -147,7 +132,7 @@ function replaceWords() {
                       foundedWord +
                       "</span>" +
                       trans_html_begin +
-                      translations[index] +
+                      translations[index][0] +
                       trans_html_end +
                       button_html_dislike
                   );
@@ -157,7 +142,7 @@ function replaceWords() {
                       foundedWord +
                       "</span>" +
                       trans_html_begin +
-                      translations[index] +
+                      translations[index][0] +
                       trans_html_end +
                       ". " +
                       button_html_dislike
@@ -168,7 +153,7 @@ function replaceWords() {
                       foundedWord +
                       "</span>" +
                       trans_html_begin +
-                      translations[index] +
+                      translations[index][0] +
                       trans_html_end +
                       ", " +
                       button_html_dislike
@@ -191,7 +176,6 @@ function replaceWords() {
                 currentWord =
                   dislikeButtons[i].previousElementSibling
                     .previousElementSibling.textContent;
-                console.log(currentWord);
                 chrome.storage.sync.get(
                   ["dislikeWordList", "likedWordList"],
                   ({ dislikeWordList, likedWordList }) => {
@@ -209,7 +193,6 @@ function replaceWords() {
                         likedWordList,
                       });
                       dislikeButtons[i].style.backgroundColor = "#636466";
-                      console.log(dislikeWordList);
                     } else {
                       dislikeWordList.splice(
                         dislikeWordList.indexOf(currentWord),
@@ -217,7 +200,6 @@ function replaceWords() {
                       );
                       chrome.storage.sync.set({ dislikeWordList });
                       dislikeButtons[i].style.backgroundColor = "#8AB4F8";
-                      console.log(dislikeWordList);
                     }
                   }
                 );
@@ -230,65 +212,93 @@ function replaceWords() {
   );
 }
 
-function bubbleDOM() {
-  var bubbleDOM = document.createElement("div");
-  bubbleDOM.setAttribute("class", "selection_bubble");
-  document.body.appendChild(bubbleDOM);
-  function addWordDoubleClick() {
-    document.addEventListener("dblclick", function (e) {
-      if (enableExtension_ !== true) return;
-      var selection = window.getSelection();
-      var range = selection.getRangeAt(0);
-      var text = range.cloneContents().textContent.replace(/\s/g, "");
-      chrome.storage.local.get(
-        ["allWords", "allTranslations"],
-        ({ allWords, allTranslations }) => {
-          word = text.toLowerCase();
-          index = allWords.indexOf(word);
-          if (index > -1) {
-            // alert(allTranslations[index]);
-            showBubblePopup(allTranslations[index], range, e);
-            chrome.storage.sync.get(
-              ["likedWordList", "dislikeWordList"],
-              ({ likedWordList, dislikeWordList }) => {
-                if (likedWordList === undefined) {
-                  likedWordList = [];
-                }
-                if (!likedWordList.includes(word)) {
-                  likedWordList.push(word);
-                  console.log(likedWordList);
-
-                  index = dislikeWordList.indexOf(word);
-                  if (index > -1) dislikeWordList.splice(index, 1);
-
-                  chrome.storage.sync.set({ likedWordList, dislikeWordList });
-                }
+function addWordDoubleClick() {
+  document.addEventListener("dblclick", function (e) {
+    try {
+      if (doubleClickCb_ !== true) return;
+    } catch (e) {
+      console.log("doubleClickCb is null");
+    }
+    var selection = window.getSelection();
+    var range = selection.getRangeAt(0);
+    var text = range.cloneContents().textContent.replace(/\s/g, "");
+    chrome.storage.local.get(
+      ["allWords", "allTranslations"],
+      ({ allWords, allTranslations }) => {
+        word = text.toLowerCase();
+        index = allWords.indexOf(word);
+        if (index > -1) {
+          // alert(allTranslations[index]);
+          showBubblePopup(allTranslations[index], word, range, e);
+          chrome.storage.sync.get(
+            ["likedWordList", "dislikeWordList"],
+            ({ likedWordList, dislikeWordList }) => {
+              if (likedWordList === undefined) {
+                likedWordList = [];
               }
-            );
-          }
+              if (!likedWordList.includes(word)) {
+                likedWordList.push(word);
+
+                index = dislikeWordList.indexOf(word);
+                if (index > -1) dislikeWordList.splice(index, 1);
+
+                chrome.storage.sync.set({ likedWordList, dislikeWordList });
+              }
+            }
+          );
         }
-      );
-    });
-
-    document.addEventListener(
-      "mousedown",
-      function (e) {
-        bubbleDOM.style.visibility = "hidden";
-      },
-      false
+      }
     );
-  }
+  });
+  var ignoreClickOnMeElement = bubbleDOM;
+
+  document.addEventListener("mousedown", function (event) {
+    var isClickInsideElement = ignoreClickOnMeElement.contains(event.target);
+    if (!isClickInsideElement) {
+      bubbleDOM.style.visibility = "hidden";
+    }
+  });
+  translationIcon.addEventListener("click", function (e) {
+    window
+      .open(
+        "https://translate.google.com/?sl=auto&tl=de&text=" +
+          currentSelectedWord +
+          "&op=translate",
+        "_blank"
+      )
+      .focus();
+  });
 }
 
-function showBubblePopup(word, selectionRange, e) {
+function showBubblePopup(synonyms, englishWord, selectionRange, e) {
   pos = selectionRange.getBoundingClientRect();
-  console.log(pos);
   // renderBubble(e.clientX - 20, e.clientY + window.scrollY + 10, word);
-  renderBubble(pos.x - 5, pos.y + window.scrollY + 20, word);
+  synonymList = synonyms.toString().split(",");
+  currentSelectedWord = englishWord;
+  renderBubble(
+    pos.x - 5,
+    pos.y + window.scrollY + 20,
+    synonymList,
+    englishWord
+  );
 }
 
-function renderBubble(mouseX, mouseY, selection) {
-  bubbleDOM.innerHTML = selection;
+function renderBubble(mouseX, mouseY, synonymList, englishWord) {
+  previousUL = bubbleDOM.querySelector("ul");
+  if (previousUL) previousUL.parentElement.removeChild(previousUL);
+  var translationsUL = document.createElement("ul");
+  translationsUL.setAttribute("class", "selection_bubble_ul");
+  var i = 0;
+  var len = synonymList.length;
+  while (i < len) {
+    synonymLI = document.createElement("li");
+    synonymLI.innerText = synonymList[i];
+    translationsUL.appendChild(synonymLI);
+    i++;
+  }
+  englishWordH2.innerText = englishWord;
+  bubbleDOM.appendChild(translationsUL);
+
   bubbleDOM.style.top = mouseY + "px";
   bubbleDOM.style.left = mouseX + "px";
   bubbleDOM.style.visibility = "visible";
@@ -300,5 +310,6 @@ function showLoadingOverlay() {
 }
 
 function hideLoadingOverlay() {
-  document.getElementById("overlay").style.display = "none";
+  if(automaticTranslationCb_)
+    document.getElementById("overlay").style.display = "none";
 }
